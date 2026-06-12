@@ -59,11 +59,14 @@ public class LoanController {
 
     // POST - crea prestito passando bookId e memberId come query params
     @PostMapping
-    public ResponseEntity<Loan> addLoan(@Valid @RequestBody LoanRequest request) {
-        Loan saved = loanService.addLoan(request.getBookId(), request.getMemberId());
-        URI location = URI.create("/loan/" + saved.getId());
-        return ResponseEntity.created(location).body(saved);
+    public ResponseEntity<List<Loan>> addLoan(@Valid @RequestBody LoanRequest request) {
+        List<Loan> saved = loanService.addLoan(
+                request.getBookIds(),
+                request.getMemberId()
+        );
+        return ResponseEntity.ok(saved);
     }
+
 
     // PATCH - restituzione libro
     @PatchMapping("/{id}/return")

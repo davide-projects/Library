@@ -1,23 +1,25 @@
 package com.apulia.library.dto;
 
+import java.util.List;
+
 public class LoanRequest {
 
-    private Integer bookId;
+    private List<Integer> bookIds;
     private Integer memberId;
 
     public LoanRequest() {}
 
-    public LoanRequest(Integer bookId, Integer memberId) {
-        this.bookId = bookId;
+    public LoanRequest(List<Integer> bookIds, Integer memberId) {
+        this.bookIds = bookIds;
         this.memberId = memberId;
     }
 
-    public Integer getBookId() {
-        return bookId;
+    public List<Integer> getBookIds() {
+        return bookIds;
     }
 
-    public void setBookId(Integer bookId) {
-        this.bookId = bookId;
+    public void setBookIds(List<Integer> bookIds) {
+        this.bookIds = bookIds;
     }
 
     public Integer getMemberId() {
