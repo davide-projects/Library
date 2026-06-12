@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -75,21 +76,27 @@ public class LoanService {
 
     // CREATE
     @Transactional
-    public Loan addLoan(Integer bookId, Integer memberId) {
-        Book book = bookRepository.findById(bookId)
-                .orElseThrow(() -> new BookNotFoundException(bookId));
+    public List<Loan> addLoan(List<Integer> bookIds, Integer memberId) {
 
+        if (bookIds == null || bookIds.isEmpty()) {
+            throw new SearchException("La lista dei libri non può essere vuota");
+        }
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new MemberNotFoundException(memberId));
+        List<Loan> loans = new ArrayList<>();
+        for (Integer bookId : bookIds) {
 
-        // Controlla se il libro è già in prestito
-        if (loanRepository.existsByBookIdAndReturnDateIsNull(bookId)) {
-            throw new SearchException("Il libro con id " + bookId + " è già in prestito");
+            Book book = bookRepository.findById(bookId)
+                    .orElseThrow(() -> new BookNotFoundException(bookId));
+            if (loanRepository.existsByBookIdAndReturnDateIsNull(bookId)) {
+                throw new SearchException("Il libro con id " + bookId + " è già in prestito");
+            }
+            Loan loan = new Loan(book, member, LocalDate.now());
+            loans.add(loanRepository.save(loan));
         }
-
-        Loan loan = new Loan(book, member, LocalDate.now());
-        return loanRepository.save(loan);
+        return loans;
     }
+
 
     // RETURN BOOK (patch returnDate)
     @Transactional
