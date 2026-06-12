@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Libri</title>
+
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+    <script src="/webjars/jquery/3.7.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/js/auth.js"></script>
+</head>
+
+<body class="bg-light">
+
+<div id="navbar-placeholder"></div>
+
+<div class="container py-4">
+
+    <h1 class="mb-4">📘 Libri</h1>
+
+    <table class="table table-striped" id="booksTable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Titolo</th>
+            <th>Autore</th>
+            <th>Editore</th>
+            <th>Azioni</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <hr>
+
+    <h3>Aggiungi Libro</h3>
+
+    <form id="addBookForm">
+        <div class="row">
+            <div class="col-md-4">
+                <input class="form-control" placeholder="Titolo" id="title">
+            </div>
+            <div class="col-md-4">
+                <input class="form-control" placeholder="Autore" id="author">
+            </div>
+            <div class="col-md-4">
+                <input class="form-control" placeholder="Editore" id="publisher">
+            </div>
+        </div>
+        <button class="btn btn-primary mt-3" type="submit">Aggiungi</button>
+    </form>
+
+</div>
+
+<script src="/js/books.js"></script>
+
+</body>
+</html>

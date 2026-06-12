@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Membri</title>
+
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+    <script src="/webjars/jquery/3.7.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Protezione pagina -->
+    <script src="/js/auth.js"></script>
+    <script src="/js/logout.js"></script>
+</head>
+
+<body class="bg-light">
+
+<div id="navbar-placeholder"></div>
+
+<div class="container py-4">
+
+    <h1 class="mb-4">👤 Membri</h1>
+
+    <table class="table table-striped" id="membersTable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Cognome</th>
+            <th>Città</th>
+            <th>Telefono</th>
+            <th>Azioni</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <hr>
+
+    <h3>Aggiungi Membro</h3>
+
+    <form id="addMemberForm">
+        <div class="row">
+            <div class="col-md-3">
+                <input class="form-control" placeholder="Nome" id="firstName">
+            </div>
+            <div class="col-md-3">
+                <input class="form-control" placeholder="Cognome" id="lastName">
+            </div>
+            <div class="col-md-3">
+                <input class="form-control" placeholder="Città" id="city">
+            </div>
+            <div class="col-md-3">
+                <input class="form-control" placeholder="Telefono" id="phone">
+            </div>
+        </div>
+
+        <button class="btn btn-primary mt-3" type="submit">Aggiungi</button>
+    </form>
+
+</div>
+
+<script src="/js/members.js"></script>
+
+</body>
+</html>
