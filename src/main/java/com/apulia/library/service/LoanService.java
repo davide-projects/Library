@@ -77,13 +77,14 @@ public class LoanService {
     // CREATE
     @Transactional
     public List<Loan> addLoan(List<Integer> bookIds, Integer memberId) {
-
         if (bookIds == null || bookIds.isEmpty()) {
             throw new SearchException("La lista dei libri non può essere vuota");
         }
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new MemberNotFoundException(memberId));
+
         List<Loan> loans = new ArrayList<>();
+
         for (Integer bookId : bookIds) {
 
             Book book = bookRepository.findById(bookId)
@@ -92,10 +93,12 @@ public class LoanService {
                 throw new SearchException("Il libro con id " + bookId + " è già in prestito");
             }
             Loan loan = new Loan(book, member, LocalDate.now());
+            loan.setReturnDate(null); // ⭐ prestito attivo
             loans.add(loanRepository.save(loan));
         }
         return loans;
     }
+
 
 
     // RETURN BOOK (patch returnDate)

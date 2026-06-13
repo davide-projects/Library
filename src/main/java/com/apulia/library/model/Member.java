@@ -17,32 +17,36 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank(message = "Il campo 'firstName' è obbligatorio")
+    @NotBlank(message = "Field 'firstName' is required")
     @Size(min = 1, max = 100,
             message = "First name must be between 1 and 100 characters")
-    @Pattern(regexp = "^[A-Za-zÀ-ÖØ-öø-ÿ'\\s-]+$", message = "First name must contain only letters")
+    @Pattern(regexp = "^[A-Za-zÀ-ÖØ-öø-ÿ'\\s-]+$",
+            message = "First name must contain only letters")
     @Column(nullable = false, name = "first_name")
     private String firstName;
 
-    @NotBlank(message = "Il campo 'lastName' è obbligatorio")
+    @NotBlank(message = "Field 'lastName' is required")
     @Size(min = 1, max = 100,
             message = "Last name must be between 1 and 100 characters")
-    @Pattern(regexp = "^[A-Za-zÀ-ÖØ-öø-ÿ'\\s-]+$", message = "Last name must contain only letters")
+    @Pattern(regexp = "^[A-Za-zÀ-ÖØ-öø-ÿ'\\s-]+$",
+            message = "Last name must contain only letters")
     @Column(nullable = false, name = "last_name")
     private String lastName;
 
-    @NotBlank(message = "Il campo 'city' è obbligatorio")
+    @NotBlank(message = "Field 'city' is required")
     @Size(min = 1, max = 100,
             message = "City must be between 1 and 100 characters")
-    @Pattern(regexp = "^[A-Za-zÀ-ÖØ-öø-ÿ'\\s-]+$", message = "City must contain only letters")
+    @Pattern(regexp = "^[A-Za-zÀ-ÖØ-öø-ÿ'\\s-]+$",
+            message = "City must contain only letters")
     @Column(nullable = false, name = "city")
     private String city;
 
-    @NotBlank(message = "Il campo 'phone' è obbligatorio")
-    @Size(min = 1, max = 20, message = "Phone must be between 1 and 20 characters")
+    @NotBlank(message = "Field 'phone' is required")
+    @Size(min = 1, max = 20,
+            message = "Phone must be between 1 and 20 characters")
     @Pattern(
             regexp = "^(?:\\+39)?\\s?(?:0\\d{1,3}\\s?\\d{5,8}|3\\d{2}\\s?\\d{6,7})$",
-            message = "Numero di telefono non valido. Accetta numeri fissi e mobili italiani, con o senza +39"
+            message = "Invalid phone number. Accepts Italian landline and mobile numbers, with or without +39"
     )
     @Column(nullable = false, name = "phone", unique = true)
     private String phone;

@@ -64,6 +64,7 @@ public class SecurityConfig {
                                 "/index.html",
                                 "/books.html",
                                 "/members.html",
+                                "/loans.html",
                                 "/css/**",
                                 "/js/**",
                                 "/images/**",
@@ -74,6 +75,7 @@ public class SecurityConfig {
                         .requestMatchers("/v3/api-docs").permitAll()
                         .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/auth/register").permitAll()
+                        .requestMatchers("/loan/**").permitAll()
 
                                 // 👤 MEMBERS
                                 .requestMatchers(HttpMethod.GET, "/members", "/members/**").hasAnyRole("USER", "ADMIN")
@@ -88,6 +90,14 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.PUT, "/book", "/book/**").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.PATCH, "/book", "/book/**").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.DELETE, "/book", "/book/**").hasRole("ADMIN")
+
+                                // 📚 LOANS
+                                .requestMatchers(HttpMethod.GET, "/loans", "/loans/**").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/loans", "/loans/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/loans", "/loans/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.PATCH, "/loans", "/loans/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/loans", "/loans/**").hasRole("ADMIN")
+
 
                         .anyRequest().authenticated()
                 )

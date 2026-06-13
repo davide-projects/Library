@@ -1,26 +1,84 @@
-# 📚 Library REST API
+# 📚 Library REST API + Static Frontend
 
 ![Java](https://img.shields.io/badge/Java-21-orange?logo=openjdk)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.4-brightgreen?logo=springboot)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-blue?logo=mysql)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-A RESTful API built with **Spring Boot** for managing a library system. Supports full CRUD operations for **books**, **members**, and **loans**, with 🔐 Basic Authentication, input validation, and custom exception handling.
+A complete **Library Management System** built with Spring Boot, featuring:
 
+- REST API for **Books**, **Members**, and **Loans**
+- Integrated **static frontend** (HTML + jQuery + Bootstrap)
+- **Form Login authentication** (Spring Security + BCrypt)
+- **Role-based access** (USER, ADMIN)
+- Custom exception handling
+- Swagger documentation
 ---
 
 ## 🛠️ Tech Stack
 
-| Technology                  | Version    |
-| --------------------------- | ---------- |
-| Java                        | 21         |
-| Spring Boot                 | 3.3.4      |
-| Spring Security             | Basic Auth |
-| Spring Data JPA             | -          |
-| MySQL                       | 8.0        |
-| Swagger (SpringDoc OpenAPI) | 2.6.0      |
-| Maven                       | -          |
+| Technology                  | Version         |
+| --------------------------- | --------------- |
+| Java                        | 21              |
+| Spring Boot                 | 3.3.4           |
+| Spring Security             | Form Login      |
+| Spring Data JPA             | -               |
+| MySQL                       | 8.0             |
+| Swagger (SpringDoc OpenAPI) | 2.6.0           |
+| Maven                       | -               |
+| Frontend                    | HTML, JS, jQuery, Bootstrap |
+ 
+---
 
+## 🖥️ Integrated Frontend
+
+The project includes a static frontend served directly from Spring Boot:
+
+```
+src/main/resources/static/
+├── components/
+│   ├── navbar.html
+│   └── modal.html
+├── js/
+│   ├── books.js
+│   ├── members.js
+│   ├── loans.js
+│   └── modal.js
+├── index.html
+├── books.html
+├── members.html
+└── loans.html
+```
+
+Access the frontend at `http://localhost:8080` after logging in.
+ 
+---
+
+## 🔐 Authentication
+
+The application uses **Form Login Authentication** (not Basic Auth).
+
+- Custom login page: `/login.html`
+- Session-based authentication via `JSESSIONID`
+- Passwords hashed with **BCrypt**
+- Custom `UserDetailsService`
+- Custom `AuthenticationEntryPoint`
+### Roles
+
+| Role  | Permissions                        |
+| ----- | ---------------------------------- |
+| USER  | View books, members, loans         |
+| ADMIN | Full CRUD on all resources         |
+
+### Default Credentials (development only)
+
+```
+Username: admin
+Password: admin
+```
+
+> ⚠️ Change these before deploying to any non-local environment.
+ 
 ---
 
 ## 📁 Project Structure
@@ -32,9 +90,15 @@ src/main/java/com/apulia/library/
 ├── repository/       # JPA Repositories
 ├── model/            # JPA Entities
 ├── dto/              # Data Transfer Objects
+├── security/         # SecurityConfig, UserDetailsService, EntryPoint
 └── exception/        # Custom Exceptions & GlobalExceptionHandler
+ 
+src/main/resources/static/
+├── components/       # Navbar + Modal
+├── js/               # Frontend logic
+└── *.html            # Pages
 ```
-
+ 
 ---
 
 ## 🗄️ Database
@@ -42,7 +106,6 @@ src/main/java/com/apulia/library/
 - **Database:** MySQL
 - **Schema:** `library_db`
 - **Port:** `3307`
-
 ### Entities
 
 **Book**
@@ -56,13 +119,13 @@ src/main/java/com/apulia/library/
 
 **Member**
 
-| Field     | Type    | Constraints                       |
-| --------- | ------- | --------------------------------- |
-| id        | Integer | PK, Auto Increment                |
-| firstName | String  | Not Blank, max 100                |
-| lastName  | String  | Not Blank, max 100                |
-| city      | String  | Not Blank, max 100                |
-| phone     | String  | Not Blank, unique, Italian format |
+| Field     | Type    | Constraints                        |
+| --------- | ------- | ---------------------------------- |
+| id        | Integer | PK, Auto Increment                 |
+| firstName | String  | Not Blank, max 100                 |
+| lastName  | String  | Not Blank, max 100                 |
+| city      | String  | Not Blank, max 100                 |
+| phone     | String  | Not Blank, unique, Italian format  |
 
 **Loan**
 
@@ -73,48 +136,65 @@ src/main/java/com/apulia/library/
 | member     | Member    | Not Null, FK       |
 | loanDate   | LocalDate | Not Null, auto-set |
 | returnDate | LocalDate | Nullable           |
-
+ 
 ---
 
 ## 🚀 Endpoints
 
 ### 📖 Book `/book`
 
-| Method | Endpoint                       | Description                          |
-| ------ | ------------------------------ | ------------------------------------ |
-| GET    | `/book`                        | Get all books                        |
-| GET    | `/book/{id}`                   | Get book by ID                       |
-| POST   | `/book`                        | Create a new book                    |
-| PUT    | `/book/{id}`                   | Update a book                        |
-| PATCH  | `/book/{id}`                   | Partial update a book                |
-| DELETE | `/book/{id}`                   | Delete a book                        |
-| GET    | `/book/search?author=&title=`  | Search books by author and/or title  |
+| Method | Endpoint                      | Description                         |
+| ------ | ----------------------------- | ----------------------------------- |
+| GET    | `/book`                       | Get all books                       |
+| GET    | `/book/{id}`                  | Get book by ID                      |
+| POST   | `/book`                       | Create a new book                   |
+| PUT    | `/book/{id}`                  | Update a book                       |
+| PATCH  | `/book/{id}`                  | Partial update a book               |
+| DELETE | `/book/{id}`                  | Delete a book                       |
+| GET    | `/book/search?author=&title=` | Search books by author and/or title |
 
 ### 👤 Member `/member`
 
-| Method | Endpoint          | Description                            |
-| ------ | ----------------- | -------------------------------------- |
-| GET    | `/member`         | Get all members                        |
-| GET    | `/member/{id}`    | Get member by ID                       |
-| POST   | `/member`         | Create a new member                    |
-| PUT    | `/member/{id}`    | Update a member                        |
-| PATCH  | `/member/{id}`    | Partial update a member                |
-| DELETE | `/member/{id}`    | Delete a member                        |
-| GET    | `/member/search`  | Search members by name, city or phone  |
+| Method | Endpoint         | Description                           |
+| ------ | ---------------- | ------------------------------------- |
+| GET    | `/member`        | Get all members                       |
+| GET    | `/member/{id}`   | Get member by ID                      |
+| POST   | `/member`        | Create a new member                   |
+| PUT    | `/member/{id}`   | Update a member                       |
+| PATCH  | `/member/{id}`   | Partial update a member               |
+| DELETE | `/member/{id}`   | Delete a member                       |
+| GET    | `/member/search` | Search members by name, city or phone |
 
 ### 📋 Loan `/loan`
 
-| Method | Endpoint                          | Description                 |
-| ------ | --------------------------------- | --------------------------- |
-| GET    | `/loan`                           | Get all loans               |
-| GET    | `/loan/{id}`                      | Get loan by ID              |
-| GET    | `/loan/member/{memberId}`         | Get loans by member         |
-| GET    | `/loan/book/{bookId}`             | Get loans by book           |
-| GET    | `/loan/member/{memberId}/active`  | Get active loans by member  |
-| POST   | `/loan`                           | Create a new loan           |
-| PATCH  | `/loan/{id}/return`               | Return a book               |
-| DELETE | `/loan/{id}`                      | Delete a loan               |
+| Method | Endpoint                         | Description                |
+| ------ | -------------------------------- | -------------------------- |
+| GET    | `/loan`                          | Get all loans              |
+| GET    | `/loan/{id}`                     | Get loan by ID             |
+| GET    | `/loan/member/{memberId}`        | Get loans by member        |
+| GET    | `/loan/book/{bookId}`            | Get loans by book          |
+| GET    | `/loan/member/{memberId}/active` | Get active loans by member |
+| POST   | `/loan`                          | Create a new loan          |
+| PATCH  | `/loan/{id}/return`              | Return a book              |
+| DELETE | `/loan/{id}`                     | Delete a loan              |
+ 
+---
 
+## 🔒 Security Rules
+
+**Public (no login required):**
+
+- `/login.html`
+- `/components/**`
+- `/js/**`
+- `/css/**`
+- `/images/**`
+- `/index.html`, `/books.html`, `/members.html`, `/loans.html`
+  **Protected (login required):**
+
+- `/book/**`
+- `/member/**`
+- `/loan/**`
 ---
 
 ## ▶️ Getting Started
@@ -124,10 +204,7 @@ src/main/java/com/apulia/library/
 - Java 21
 - MySQL 8.0
 - Maven
-
 ### Database Setup
-
-Create the schema before running the application:
 
 ```sql
 CREATE DATABASE library_db;
@@ -143,21 +220,10 @@ Edit `src/main/resources/application.properties`:
 spring.datasource.url=jdbc:mysql://localhost:3307/library_db
 spring.datasource.username=root
 spring.datasource.password=your_password
-
+ 
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 ```
-
-### Default Credentials
-
-The API uses HTTP Basic Authentication. Default credentials (configurable in `application.properties` or `SecurityConfig`):
-
-```
-Username: admin
-Password: admin
-```
-
-> ⚠️ Change these before deploying to any non-local environment.
 
 ### Run the project
 
@@ -165,8 +231,9 @@ Password: admin
 mvn spring-boot:run
 ```
 
-The application will start on `http://localhost:8080`.
-
+The application will start at `http://localhost:8080`.  
+You will be redirected to `/login.html` if not authenticated.
+ 
 ---
 
 ## 📄 API Documentation
@@ -182,22 +249,7 @@ The OpenAPI spec (JSON) is available at:
 ```
 http://localhost:8080/v3/api-docs
 ```
-
----
-
-## 🔐 Authentication
-
-The API uses **Basic Authentication**. Include your credentials in every request.
-
-**Postman:** `Authorization` tab → select `Basic Auth` → enter username and password.
-
-**Swagger UI:** click the 🔒 **Authorize** button at the top right of the Swagger page.
-
-**cURL:**
-```bash
-curl -u admin:admin http://localhost:8080/book
-```
-
+ 
 ---
 
 ## 📦 Example Requests
@@ -207,8 +259,7 @@ curl -u admin:admin http://localhost:8080/book
 ```http
 POST /book
 Content-Type: application/json
-Authorization: Basic YWRtaW46YWRtaW4=
-
+ 
 {
   "title": "Clean Code",
   "author": "Robert C. Martin",
@@ -221,8 +272,7 @@ Authorization: Basic YWRtaW46YWRtaW4=
 ```http
 POST /loan
 Content-Type: application/json
-Authorization: Basic YWRtaW46YWRtaW4=
-
+ 
 {
   "bookId": 1,
   "memberId": 2
@@ -233,9 +283,8 @@ Authorization: Basic YWRtaW46YWRtaW4=
 
 ```http
 PATCH /loan/1/return
-Authorization: Basic YWRtaW46YWRtaW4=
 ```
-
+ 
 ---
 
 ## ⚠️ Error Handling
@@ -256,9 +305,10 @@ All errors return a consistent `ErrorResponse` object:
 | 401    | Unauthorized                   |
 | 404    | Resource Not Found             |
 | 500    | Internal Server Error          |
-
+ 
 ---
 
 ## 📝 License
 
 This project is licensed under the [MIT License](LICENSE).
+ 

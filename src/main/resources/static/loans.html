@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Prestiti</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body class="bg-light">
+
+<!-- NAVBAR -->
+<div id="navbar-placeholder"></div>
+
+<div class="container py-4">
+
+    <h1 class="mb-4">Gestione Prestiti</h1>
+
+    <!-- FORM AGGIUNTA PRESTITO -->
+    <div class="card mb-4">
+        <div class="card-header">Aggiungi Prestito</div>
+        <div class="card-body">
+
+            <form id="addLoanForm">
+
+                <div class="row mb-3">
+                    <div class="col">
+                        <label for="memberId" class="form-label">ID Membro</label>
+                        <input type="number" id="memberId" class="form-control" required>
+                    </div>
+
+                    <div class="col">
+                        <label for="bookId" class="form-label">ID Libro</label>
+                        <input type="number" id="bookId" class="form-control" required>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary w-100">Aggiungi Prestito</button>
+
+            </form>
+
+        </div>
+    </div>
+
+    <!-- TABELLA PRESTITI -->
+    <div class="card">
+        <div class="card-header">Elenco Prestiti</div>
+        <div class="card-body">
+
+            <table class="table table-striped" id="loansTable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Membro</th>
+                    <th>Libro</th>
+                    <th>Data Inizio</th>
+                    <th>Data Restituzione</th>
+                    <th>Azioni</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- MODAL COMPONENT -->
+<div id="modal-placeholder"></div>
+
+<!-- SCRIPT COMPONENTI + LOGICA -->
+<script>
+    $(function () {
+        // carica navbar e modal come componenti
+        $("#navbar-placeholder").load("/components/navbar.html");
+        $("#modal-placeholder").load("/components/modal.html");
+    });
+</script>
+
+<script src="/js/modal.js"></script>
+<script src="/js/loans.js"></script>
+
+</body>
+</html>

@@ -4,32 +4,33 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @JsonPropertyOrder({"id", "username", "role"})
 @JsonIgnoreProperties(ignoreUnknown = false)
 
 @Entity
-@Table (name = "users")
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank(message = "Il campo 'username' è obbligatorio")
+    @NotBlank(message = "Field 'username' is required")
     @Size(min = 3, max = 50,
             message = "Username must be between 3 and 50 characters")
     @Column(nullable = false, unique = true, name = "username")
     private String username;
 
-    @NotBlank(message = "Il campo 'password' è obbligatorio")
+    @NotBlank(message = "Field 'password' is required")
     @Size(min = 8, max = 255,
             message = "Password must be between 8 and 255 characters")
     @Column(nullable = false, name = "password")
     private String password;
 
-    @NotBlank(message = "Il campo 'role' è obbligatorio")
+    @NotNull(message = "Field 'role' is required")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, name = "role")
     private Role role;
@@ -79,7 +80,7 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
-                ", role='" + role + '\'' +
+                ", role=" + role +
                 '}';
     }
 }

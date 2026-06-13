@@ -18,21 +18,21 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank(message = "Il campo 'title' è obbligatorio")
+    @NotBlank(message = "Field 'title' is required")
     @Size(min = 1, max = 255,
             message = "Title must be between 1 and 255 characters")
     @Column(nullable = false, name = "title")
     private String title;
 
 
-    @NotBlank(message = "Il campo 'author' è obbligatorio")
+    @NotBlank(message = "Field 'author' is required")
     @Size(min = 1, max = 255,
             message = "Author must be between 1 and 255 characters")
     @Column(nullable = false, name = "author")
     private String author;
 
 
-    @NotBlank(message = "Il campo 'publisher' è obbligatorio")
+    @NotBlank(message = "Field 'publisher' is required")
     @Size(min = 1, max = 255,
             message = "Publisher must be between 1 and 255 characters")
     @Column(nullable = false, name = "publisher")

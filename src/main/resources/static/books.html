@@ -13,12 +13,23 @@
 
 <body class="bg-light">
 
+<!-- NAVBAR -->
 <div id="navbar-placeholder"></div>
+<script>
+    $("#navbar-placeholder").load("/components/navbar.html");
+</script>
+
+<!-- GLOBAL MODAL -->
+<div id="modal-placeholder"></div>
+<script>
+    $("#modal-placeholder").load("/components/modal.html");
+</script>
 
 <div class="container py-4">
 
     <h1 class="mb-4">📘 Libri</h1>
 
+    <!-- TABLE -->
     <table class="table table-striped" id="booksTable">
         <thead>
         <tr>
@@ -34,6 +45,7 @@
 
     <hr>
 
+    <!-- ADD BOOK FORM -->
     <h3>Aggiungi Libro</h3>
 
     <form id="addBookForm">
@@ -53,6 +65,7 @@
 
 </div>
 
+<script src="/js/modal.js"></script>
 <script src="/js/books.js"></script>
 
 </body>
